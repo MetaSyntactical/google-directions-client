@@ -1,0 +1,23 @@
+{
+  "name": "consoserv/google-directions-client",
+  "description": "Client for Google Directions API to add interpolated points to a route consisting of given coordinates.",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "David Weichert",
+      "email": "info@davidweichert.de"
+    }
+  ],
+  "require": {
+    "psr/log": "~1.0",
+    "gamez/psr-testlogger": "~1.0",
+    "beberlei/assert": "~2.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.8.*"
+  },
+  "autoload": {
+    "psr-4": { "Consoserv\\GoogleDirections\\": "src/" }
+  }
+}
