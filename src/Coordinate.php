@@ -28,6 +28,7 @@ class Coordinate
      *
      * @param double $latitude OPTIONAL
      * @param double $longitude OPTIONAL
+     * @throws \DomainException
      */
     public function __construct($latitude = 51.476780 , $longitude = 0.000479)
     {
@@ -56,6 +57,7 @@ class Coordinate
     /**
      * @param double $latitude
      * @return Coordinate
+     * @throws \DomainException
      */
     public function setLatitude($latitude)
     {
@@ -75,6 +77,7 @@ class Coordinate
     /**
      * @param double $longitude
      * @return Coordinate
+     * @throws \DomainException
      */
     public function setLongitude($longitude)
     {
@@ -83,6 +86,11 @@ class Coordinate
         return $this;
     }
 
+    /**
+     * @param $value
+     * @return bool
+     * @throws \DomainException
+     */
     private function isValidLatitude($value)
     {
         $errormsg = '';
