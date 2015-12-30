@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "710e75c7baace3af50be6137afbab5d5",
-    "content-hash": "948e52a3cff4101de753b4261c3389b3",
+    "hash": "791de21364692eae2fb99b689162cc2e",
+    "content-hash": "0e32226f04ef549ef1f7369b4ac29ecc",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -59,51 +59,6 @@
                 "validation"
             ],
             "time": "2015-08-21 16:50:17"
-        },
-        {
-            "name": "gamez/psr-testlogger",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jeromegamez/php-psr-testlogger.git",
-                "reference": "33619dc7ddaed65c552798ad47a18a47f389fe48"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jeromegamez/php-psr-testlogger/zipball/33619dc7ddaed65c552798ad47a18a47f389fe48",
-                "reference": "33619dc7ddaed65c552798ad47a18a47f389fe48",
-                "shasum": ""
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^3.0|^4.0|^5.0",
-                "psr/log": "^1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Gamez\\Psr\\Log\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jérôme Gamez",
-                    "email": "jerome@gamez.name"
-                }
-            ],
-            "description": "PSR-3 compliant test and mock loggers to be used in Unit Tests.",
-            "keywords": [
-                "log",
-                "mock",
-                "phpunit",
-                "psr",
-                "psr-3",
-                "test"
-            ],
-            "time": "2015-11-17 13:35:34"
         },
         {
             "name": "psr/log",
@@ -198,6 +153,51 @@
                 "instantiate"
             ],
             "time": "2015-06-14 21:17:01"
+        },
+        {
+            "name": "gamez/psr-testlogger",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jeromegamez/php-psr-testlogger.git",
+                "reference": "33619dc7ddaed65c552798ad47a18a47f389fe48"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jeromegamez/php-psr-testlogger/zipball/33619dc7ddaed65c552798ad47a18a47f389fe48",
+                "reference": "33619dc7ddaed65c552798ad47a18a47f389fe48",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^3.0|^4.0|^5.0",
+                "psr/log": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gamez\\Psr\\Log\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jérôme Gamez",
+                    "email": "jerome@gamez.name"
+                }
+            ],
+            "description": "PSR-3 compliant test and mock loggers to be used in Unit Tests.",
+            "keywords": [
+                "log",
+                "mock",
+                "phpunit",
+                "psr",
+                "psr-3",
+                "test"
+            ],
+            "time": "2015-11-17 13:35:34"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -1049,16 +1049,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.0.0",
+            "version": "v3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "177a015cb0e19ff4a49e0e2e2c5fc1c1bee07002"
+                "reference": "3df409958a646dad2bc5046c3fb671ee24a1a691"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/177a015cb0e19ff4a49e0e2e2c5fc1c1bee07002",
-                "reference": "177a015cb0e19ff4a49e0e2e2c5fc1c1bee07002",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/3df409958a646dad2bc5046c3fb671ee24a1a691",
+                "reference": "3df409958a646dad2bc5046c3fb671ee24a1a691",
                 "shasum": ""
             },
             "require": {
@@ -1094,7 +1094,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-11-30 12:36:17"
+            "time": "2015-12-26 13:39:53"
         }
     ],
     "aliases": [],
