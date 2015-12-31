@@ -11,22 +11,29 @@
 namespace Consoserv\GoogleDirections;
 
 
+use Assert\Assertion;
+
 class Route
 {
     /**
      * @var Coordinate[]
      */
-    private $inputRoute;
+    private $inputRoute = [];
 
     /**
      * @var Coordinate[]
      */
-    private $interpolatedRoute;
+    private $interpolatedRoute = [];
 
     /**
      * @var Coordinate[]
      */
-    private $remainingCoordinates;
+    private $remainingCoordinates = [];
+
+    /**
+     * @var Coordinate
+     */
+    private $current;
 
     /**
      * @return Coordinate[]
@@ -43,7 +50,34 @@ class Route
     public function setInputRoute($inputRoute)
     {
         $this->inputRoute = $inputRoute;
+        $this->current = array_shift($inputRoute);
+        $this->remainingCoordinates = $inputRoute;
+
         return $this;
+    }
+
+    /**
+     * @return Coordinate
+     */
+    public function getCurrentCoordinate()
+    {
+        return $this->current;
+    }
+
+    /**
+     * Returns false if there are no more remaining coordinates.
+     *
+     * @return Coordinate|bool
+     */
+    public function getNextCoordinate()
+    {
+        if (empty($this->remainingCoordinates))
+        {
+            return false;
+        }
+
+        $this->current = array_shift($this->remainingCoordinates);
+        return $this->current;
     }
 
     /**
@@ -55,38 +89,22 @@ class Route
     }
 
     /**
-     * @param Coordinate[] $interpolatedRoute
-     * @return Route
-     */
-    private function setInterpolatedRoute($interpolatedRoute)
-    {
-        $this->interpolatedRoute = $interpolatedRoute;
-        return $this;
-    }
-
-    /**
-     * @return Coordinate[]
-     */
-    private function getRemainingCoordinates()
-    {
-        return $this->remainingCoordinates;
-    }
-
-    /**
-     * @param Coordinate[] $remainingCoordinates
-     * @return Route
-     */
-    private function setRemainingCoordinates($remainingCoordinates)
-    {
-        $this->remainingCoordinates = $remainingCoordinates;
-        return $this;
-    }
-
-    /**
      * @return int
      */
     public function getRemainingCoordinateCount()
     {
         return count($this->remainingCoordinates);
+    }
+
+    /**
+     * @param Coordinate[] $coordinates
+     * @return Route
+     */
+    public function addToInterpolatedRoute($coordinates)
+    {
+        Assertion::allIsInstanceOf($coordinates, 'Consoserv\GoogleDirections\Coordinate');
+        $this->interpolatedRoute = array_merge($this->interpolatedRoute, $coordinates);
+
+        return $this;
     }
 }

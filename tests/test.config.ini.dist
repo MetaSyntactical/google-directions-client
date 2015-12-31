@@ -1,0 +1,13 @@
+; #############################################################################
+; # To run the tests against the Google API you need to obtain a Google API   #
+; # key for the Google Directions API.                                        #
+; #                                                                           #
+; # See: https://developers.google.com/maps/documentation/directions/?hl=de   #
+; #                                                                           #
+; # Once you obtained your key you need to make a copy of this file named     #
+; # test.config.ini in the same folder and substitute the example key with    #
+; # your actual key.                                                          #
+; #############################################################################
+
+[Google]
+ApiKey = abcdefghijklmnopqrstuvwxyz0123456789abc
