@@ -14,7 +14,7 @@ namespace Consoserv\GoogleDirections;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
-class Polyline implements LoggerAwareInterface
+class Polyline implements PolylineDecoderInterface, LoggerAwareInterface
 {
     /**
      * @var LoggerInterface;
@@ -22,7 +22,7 @@ class Polyline implements LoggerAwareInterface
     private $logger;
 
     /**
-     * @param $polyline
+     * @param string $polyline
      * @return Coordinate[]
      */
     public function decode($polyline)
