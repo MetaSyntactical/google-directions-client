@@ -11,7 +11,8 @@
   ],
   "require": {
     "psr/log": "~1.0",
-    "beberlei/assert": "~2.4"
+    "beberlei/assert": "~2.4",
+    "metasyntactical/http-transport-guzzle": "~1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "4.8.*",
