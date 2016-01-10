@@ -12,48 +12,32 @@ namespace Consoserv\GoogleDirections;
 
 
 use Assert\Assertion;
+use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Response;
+use MetaSyntactical\Http\Transport\Guzzle\GuzzleTransport;
 use PHPUnit_Framework_TestCase;
 
 class ClientTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @var Client
-     */
-    protected $object;
+    private $container = [];
 
-    protected function setUp()
+    /**
+     * @dataProvider getDirectionsProvider
+     */
+    public function testGetDirections200($coordinates, $remainingCoordinateCount, $initialCoordinateCount)
     {
-        $configIni = __DIR__ . '/test.config.ini';
-        if (file_exists($configIni))
-        {
-            $cofig = parse_ini_file($configIni, true);
-            $polylineDecoder = new Polyline();
-            // For usage in production it might be useful to log which
-            // coordinates were skipped, because of errors (e.g. if coordinate
-            // was invalid).
-            //$polylineDecoder->setLogger($loggerObj);
-            $this->object = new Client($cofig['Google']['ApiKey'], $polylineDecoder);
-        }
-        else
-        {
-            self::markTestSkipped(
-                'Test configuration missing. See: tests/test.config.ini.dist.'
-            );
-        }
+        self::markTestIncomplete('Implement test with 200 HTTP response.');
     }
 
     /**
      * @dataProvider getDirectionsProvider
      */
-    public function testGetDirections($coordinates, $remainingCoordinateCount, $initialCoordinateCount)
+    public function testGetDirections500($coordinates, $remainingCoordinateCount, $initialCoordinateCount)
     {
-        $routeFactory = new RouteFactory();
-        $route = $routeFactory->createRoute($coordinates);
-
-        self::assertEquals($initialCoordinateCount, $route->getRemainingCoordinateCount());
-        $actual = $this->object->getDirections($route);
-        self::assertEquals($remainingCoordinateCount, $actual->getRemainingCoordinateCount());
-        self::assertTrue(is_array($route->getInterpolatedRoute()));
+        self::markTestIncomplete('Implement test with 500 HTTP response.');
     }
 
     public function getDirectionsProvider()
@@ -73,5 +57,20 @@ class ClientTest extends PHPUnit_Framework_TestCase
                 6
             ]
         ];
+    }
+
+    private function getSuccessMock()
+    {
+        $mock = new MockHandler([
+                new Response(200, ["X-Foo" => "Bar"], "It worked!")
+            ]);
+            $stack = HandlerStack::create($mock);
+
+            $history = Middleware::history($this->container);
+            $stack->push($history);
+
+            $client = new HttpClient(["handler" => $stack]);
+
+            $this->object = new GuzzleTransport($client);
     }
 }

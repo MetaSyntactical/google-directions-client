@@ -10,6 +10,8 @@
 
 namespace Consoserv\GoogleDirections;
 
+use GuzzleHttp\Psr7\Uri;
+use MetaSyntactical\Http\Transport\TransportInterface;
 
 class Client
 {
@@ -34,15 +36,25 @@ class Client
     private $polylineDecoder;
 
     /**
+     * @var TransportInterface
+     */
+    private $httpTransport;
+
+    /**
      * Client constructor.
      *
      * @param string $apiKey Google API key
      * @param PolylineDecoderInterface $polylineDecoder
      */
-    public function __construct($apiKey, PolylineDecoderInterface $polylineDecoder)
+    public function __construct(
+        $apiKey,
+        PolylineDecoderInterface $polylineDecoder,
+        TransportInterface $httpTransport
+    )
     {
         $this->apiKey = $apiKey;
         $this->polylineDecoder = $polylineDecoder;
+        $this->httpTransport = $httpTransport;
     }
 
     /**
@@ -53,9 +65,17 @@ class Client
      */
     public function getDirections(Route $route)
     {
-        $request = $this->createRequest($route);
-        //@TODO introduce Guzzle to make request and add error handling
-        $result = json_decode(file_get_contents($request), true);
+        $request = $this->httpTransport->newRequest()
+            ->withMethod('GET')
+            ->withUri($this->createUri($route));
+        $response = $this->httpTransport->send($request);
+
+        if (200 != $response->getStatusCode())
+        {
+            return $route;
+        }
+
+        $result = json_decode($response->getBody()->getContents(), true);
         $overviewPolyline = $result['routes'][0]['overview_polyline']['points'];
         $coordinates = $this->polylineDecoder->decode($overviewPolyline);
         $route->addToInterpolatedRoute($coordinates);
@@ -65,9 +85,9 @@ class Client
 
     /**
      * @param Route $route
-     * @return string
+     * @return Uri
      */
-    private function createRequest(Route $route)
+    private function createUri(Route $route)
     {
         $cnt = 1;
         $max = self::MAX_WAYPOINTS_LIMIT + 2;
@@ -90,14 +110,14 @@ class Client
         $destLat = $end->getLatitude();
         $destLng = $end->getLongitude();
 
-        $request = $this->serviceEndpoint
+        $uriString = $this->serviceEndpoint
             . "origin=$origLat,$origLng"
             . "&destination=$destLat,$destLng";
 
-        $request .= $this->addWaypoints($waypoints);
+        $uriString .= $this->addWaypoints($waypoints);
 
-        $request .= "&key=$this->apiKey";
-        return $request;
+        $uriString .= "&key=$this->apiKey";
+        return new Uri($uriString);
     }
 
     /**
