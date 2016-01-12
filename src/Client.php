@@ -12,8 +12,10 @@ namespace Consoserv\GoogleDirections;
 
 use GuzzleHttp\Psr7\Uri;
 use MetaSyntactical\Http\Transport\TransportInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
 
-class Client
+class Client implements LoggerAwareInterface
 {
     /**
      * The Google directions API is limited to handling 23 waypoints per request.
@@ -24,6 +26,11 @@ class Client
      * @var string
      */
     private $apiKey;
+
+    /**
+     * @var LoggerInterface;
+     */
+    private $logger;
 
     /**
      * @var string
@@ -68,7 +75,18 @@ class Client
         $request = $this->httpTransport->newRequest()
             ->withMethod('GET')
             ->withUri($this->createUri($route));
-        $response = $this->httpTransport->send($request);
+        try
+        {
+            $response = $this->httpTransport->send($request);
+        }
+        catch(\GuzzleHttp\Exception\RequestException $e)
+        {
+            if (!is_null($this->logger))
+            {
+                $this->logger->error($e->getMessage());
+            }
+            return $route;
+        }
 
         if (200 != $response->getStatusCode())
         {
@@ -144,5 +162,16 @@ class Client
         }
 
         return rtrim($getParams, '|');
+    }
+
+    /**
+     * Sets a logger instance on the object
+     *
+     * @param LoggerInterface $logger
+     * @return void
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 }

@@ -12,6 +12,7 @@ namespace Consoserv\GoogleDirections;
 
 
 use Assert\Assertion;
+use Gamez\Psr\Log\TestLogger;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -22,7 +23,20 @@ use PHPUnit_Framework_TestCase;
 
 class ClientTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @var array
+     */
     private $container = [];
+
+    /**
+     * @var TestLogger
+     */
+    private $logger;
+
+    protected function setUp()
+    {
+        $this->logger = new TestLogger();
+    }
 
     /**
      * @dataProvider getDirectionsProvider
@@ -37,7 +51,27 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     public function testGetDirections500($coordinates, $remainingCoordinateCount, $initialCoordinateCount)
     {
-        self::markTestIncomplete('Implement test with 500 HTTP response.');
+        $obj = new Client(
+            'abcdefg',
+            new Polyline(),
+            $this->get500Mock()
+        );
+
+        $obj->setLogger($this->logger);
+
+        $routeFactory = new RouteFactory();
+        $route = $routeFactory->createRoute($coordinates);
+
+        $result = $obj->getDirections($route);
+        self::assertTrue(
+            $this->logger->hasRecord(
+                'error Server error: `GET https://maps.googleapis.com/maps/api/directions/json?origin=50.1109756,'
+                . '8.6824697&destination=50.1320079,8.6829269&waypoints=via:50.1131057,8.6935646%7Cvia:50.1114651,'
+                . '8.704576%7Cvia:50.1128467,8.7049644%7Cvia:50.1173763,8.7084722%7Cvia:50.1292499,8.6924497&key='
+                . 'abcdefg` resulted in a `500 Internal Server Error` response:'
+            )
+        );
+        self::assertEquals($route, $result);
     }
 
     public function getDirectionsProvider()
@@ -59,10 +93,10 @@ class ClientTest extends PHPUnit_Framework_TestCase
         ];
     }
 
-    private function getSuccessMock()
+    private function get500Mock()
     {
         $mock = new MockHandler([
-                new Response(200, ["X-Foo" => "Bar"], "It worked!")
+                new Response(500)
             ]);
             $stack = HandlerStack::create($mock);
 
@@ -71,6 +105,6 @@ class ClientTest extends PHPUnit_Framework_TestCase
 
             $client = new HttpClient(["handler" => $stack]);
 
-            $this->object = new GuzzleTransport($client);
+            return new GuzzleTransport($client);
     }
 }
