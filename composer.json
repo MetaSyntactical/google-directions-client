@@ -1,5 +1,5 @@
 {
-  "name": "consoserv/google-directions-client",
+  "name": "MetaSyntactical/google-directions-client",
   "description": "Client for Google Directions API to add interpolated points to a route consisting of given coordinates.",
   "minimum-stability": "stable",
   "license": "MIT",
@@ -20,6 +20,6 @@
     "gamez/psr-testlogger": "~1.0"
   },
   "autoload": {
-    "psr-4": { "Consoserv\\GoogleDirections\\": "src/" }
+    "psr-4": { "MetaSyntactical\\GoogleDirections\\": "src/" }
   }
 }

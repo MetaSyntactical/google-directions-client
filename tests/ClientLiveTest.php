@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Consoserv\GoogleDirections;
+namespace MetaSyntactical\GoogleDirections;
 
 
 use GuzzleHttp\Client as HttpClient;
@@ -17,7 +17,7 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class ClientLiveTest
- * @package Consoserv\GoogleDirections
+ * @package MetaSyntactical\GoogleDirections
  *
  * This test demonstrates the usage of the client against the Google Directions
  * API. It will actually call the Google API using the API key specified in the

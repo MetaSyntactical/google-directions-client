@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Consoserv\GoogleDirections;
+namespace MetaSyntactical\GoogleDirections;
 
 
 use Assert\Assertion;
@@ -102,7 +102,7 @@ class Route
      */
     public function addToInterpolatedRoute($coordinates)
     {
-        Assertion::allIsInstanceOf($coordinates, 'Consoserv\GoogleDirections\Coordinate');
+        Assertion::allIsInstanceOf($coordinates, 'MetaSyntactical\GoogleDirections\Coordinate');
         $this->interpolatedRoute = array_merge($this->interpolatedRoute, $coordinates);
 
         return $this;

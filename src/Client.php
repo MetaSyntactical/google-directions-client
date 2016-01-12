@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Consoserv\GoogleDirections;
+namespace MetaSyntactical\GoogleDirections;
 
 use GuzzleHttp\Psr7\Uri;
 use MetaSyntactical\Http\Transport\TransportInterface;

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Consoserv\GoogleDirections;
+namespace MetaSyntactical\GoogleDirections;
 
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
