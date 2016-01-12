@@ -90,6 +90,13 @@ class Client implements LoggerAwareInterface
 
         if (200 != $response->getStatusCode())
         {
+            $this->logger->error(
+                sprintf(
+                    'Received HTTP response code %s with reason "%s".',
+                    $response->getStatusCode(),
+                    $response->getReasonPhrase()
+                )
+            );
             return $route;
         }
 

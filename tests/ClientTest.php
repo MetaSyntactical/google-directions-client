@@ -55,6 +55,32 @@ class ClientTest extends PHPUnit_Framework_TestCase
 
         self::assertEquals(163, count($result->getInterpolatedRoute()));
         self::assertEquals(0, $result->getRemainingCoordinateCount());
+        self::assertEquals($initialCoordinateCount, count($result->getInputRoute()));
+    }
+
+    /**
+     * @dataProvider getDirectionsProvider
+     */
+    public function testGetDirections204($coordinates, $remainingCoordinateCount, $initialCoordinateCount)
+    {
+        $obj = new Client(
+            'abcdefg',
+            new Polyline(),
+            $this->get204Mock()
+        );
+
+        $obj->setLogger($this->logger);
+
+        $routeFactory = new RouteFactory();
+        $route = $routeFactory->createRoute($coordinates);
+
+        $result = $obj->getDirections($route);
+        self::assertTrue(
+            $this->logger->hasRecord(
+                'error Received HTTP response code 204 with reason "No Content".'
+            )
+        );
+        self::assertEquals($route, $result);
     }
 
     /**
@@ -99,7 +125,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
                     '50.1320079,8.6829269',  // Deutsche Nationalbibliothek
                 ],
                 0,
-                6
+                7
             ]
         ];
     }
@@ -108,6 +134,21 @@ class ClientTest extends PHPUnit_Framework_TestCase
     {
         $mock = new MockHandler([
                 new Response(500)
+            ]);
+        $stack = HandlerStack::create($mock);
+
+        $history = Middleware::history($this->container);
+        $stack->push($history);
+
+        $client = new HttpClient(["handler" => $stack]);
+
+        return new GuzzleTransport($client);
+    }
+
+    private function get204Mock()
+    {
+        $mock = new MockHandler([
+                new Response(204)
             ]);
         $stack = HandlerStack::create($mock);
 
