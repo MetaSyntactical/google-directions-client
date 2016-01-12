@@ -11,7 +11,6 @@
 namespace Consoserv\GoogleDirections;
 
 
-use Assert\Assertion;
 use Gamez\Psr\Log\TestLogger;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Handler\MockHandler;
@@ -43,7 +42,19 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     public function testGetDirections200($coordinates, $remainingCoordinateCount, $initialCoordinateCount)
     {
-        self::markTestIncomplete('Implement test with 200 HTTP response.');
+        $obj = new Client(
+            'abcdefg',
+            new Polyline(),
+            $this->get200Mock()
+        );
+
+        $routeFactory = new RouteFactory();
+        $route = $routeFactory->createRoute($coordinates);
+
+        $result = $obj->getDirections($route);
+
+        self::assertEquals(163, count($result->getInterpolatedRoute()));
+        self::assertEquals(0, $result->getRemainingCoordinateCount());
     }
 
     /**
@@ -98,13 +109,41 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $mock = new MockHandler([
                 new Response(500)
             ]);
-            $stack = HandlerStack::create($mock);
+        $stack = HandlerStack::create($mock);
 
-            $history = Middleware::history($this->container);
-            $stack->push($history);
+        $history = Middleware::history($this->container);
+        $stack->push($history);
 
-            $client = new HttpClient(["handler" => $stack]);
+        $client = new HttpClient(["handler" => $stack]);
 
-            return new GuzzleTransport($client);
+        return new GuzzleTransport($client);
+    }
+
+    private function get200Mock()
+    {
+        $mock = new MockHandler([
+                new Response(
+                    200,
+                    [],
+                    json_encode(
+                        ['routes' => [
+                            0 => [
+                                'overview_polyline' => [
+                                    'points' => "yhzpHgx~s@u@}Cc@gDYyAxAm@DK?EF_@Du@?i@OuCEo@Eq@WNiClBWPYJK?I?IuAM}FIeBMqCCkAB}AAaFEq@Gg@eAuE[_BGw@IyCYmE?mDLeC`@aGZmHNiDN}E@_BKoF@o@Ly@FO`@i@nAoATOjDiAUyBK{B]e@_DeCk@o@m@YOhBA|@Ad@@ZGv@IrAGnCAd@`B|@HFFDp@q@TOjDiAUyBK{B]e@_DeCk@o@m@YUQMSqA{BSSSE]HOAe@m@IOKEsBiD}@kAW[GOa@a@i@e@MGYCS?a@R{@~@oE|Fa@`@o@`@sC`DaC|CmBzBm@z@sApBcBrB_Ap@U\\_@n@MZY|@[p@oAbB_@d@U^WRi@n@y@bAcAnAIP}A`Bi@n@kAzAkAtAi@d@qAt@kAvAkBlCyC|EcDnGIPNbBf@fDHXZpD^hDBn@NzBD`@qDv@mIxAJaAJk@lAgE`BeFdBsEf@kACKIWWSeBfEo@hBc@jAkArD{AvFcAbEu@dDeCzNe@rBG^AbABfDIhB[|BMnA"
+                                    ]
+                                ]
+                            ]
+                        ]
+                    )
+                )
+            ]);
+        $stack = HandlerStack::create($mock);
+
+        $history = Middleware::history($this->container);
+        $stack->push($history);
+
+        $client = new HttpClient(["handler" => $stack]);
+
+        return new GuzzleTransport($client);
     }
 }
