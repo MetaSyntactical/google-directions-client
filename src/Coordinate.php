@@ -11,6 +11,8 @@
 namespace MetaSyntactical\GoogleDirections;
 
 
+use DomainException;
+
 class Coordinate
 {
     const GOOGLE_MIN_LAT = -85;
@@ -28,7 +30,7 @@ class Coordinate
      *
      * @param double $latitude OPTIONAL
      * @param double $longitude OPTIONAL
-     * @throws \DomainException
+     * @throws DomainException
      */
     public function __construct($latitude = 51.476780 , $longitude = 0.000479)
     {
@@ -57,7 +59,7 @@ class Coordinate
     /**
      * @param double $latitude
      * @return Coordinate
-     * @throws \DomainException
+     * @throws DomainException
      */
     public function setLatitude($latitude)
     {
@@ -77,7 +79,7 @@ class Coordinate
     /**
      * @param double $longitude
      * @return Coordinate
-     * @throws \DomainException
+     * @throws DomainException
      */
     public function setLongitude($longitude)
     {
@@ -89,7 +91,7 @@ class Coordinate
     /**
      * @param $value
      * @return bool
-     * @throws \DomainException
+     * @throws DomainException
      */
     private function isValidLatitude($value)
     {
@@ -112,7 +114,7 @@ class Coordinate
         }
         if ('' != $errormsg)
         {
-            throw new \DomainException(
+            throw new DomainException(
                 rtrim($errormsg)
             );
         }
@@ -120,6 +122,11 @@ class Coordinate
         return true;
     }
 
+    /**
+     * @param $value
+     * @return bool
+     * @throws DomainException
+     */
     private function isValidLongitude($value)
     {
         $errormsg = '';
@@ -141,7 +148,7 @@ class Coordinate
         }
         if ('' != $errormsg)
         {
-            throw new \DomainException(
+            throw new DomainException(
                 rtrim($errormsg)
             );
         }
