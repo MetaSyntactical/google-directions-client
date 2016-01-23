@@ -1,8 +1,10 @@
 # README
 
 [![Build Status](https://travis-ci.org/MetaSyntactical/google-directions-client.svg?branch=master)](https://travis-ci.org/MetaSyntactical/google-directions-client)
-[![Downloads this Month](https://img.shields.io/packagist/dm/metasyntactical/google-directions-client.svg?style=flat-square)](https://packagist.org/packages/metasyntactical/google-directions-client)
-[![Latest stable](https://img.shields.io/packagist/v/metasyntactical/google-directions-client.svg?style=flat-square&label=stable)](https://packagist.org/packages/metasyntactical/google-directions-client)
+[![Downloads this Month](https://img.shields.io/packagist/dm/metasyntactical/google-directions-client.svg?style=flat)](https://packagist.org/packages/metasyntactical/google-directions-client)
+[![Latest stable](https://img.shields.io/packagist/v/metasyntactical/google-directions-client.svg?style=flat&label=stable)](https://packagist.org/packages/metasyntactical/google-directions-client)
+[![Latest dev](https://img.shields.io/packagist/vpre/metasyntactical/google-directions-client.svg?style=flat&label=unstable)](https://packagist.org/packages/metasyntactical/google-directions-client)
+[![License](https://img.shields.io/packagist/l/metasyntactical/google-directions-client.svg?style=flat&label=stable)](https://packagist.org/packages/metasyntactical/google-directions-client)
 [![Code Climate](https://codeclimate.com/github/MetaSyntactical/google-directions-client/badges/gpa.svg)](https://codeclimate.com/github/MetaSyntactical/google-directions-client)
 
 ## What is MetaSyntactical/GoogleDirections?
