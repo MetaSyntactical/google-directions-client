@@ -1,9 +1,12 @@
 language: php
 php:
-- '7.0'
-- '5.6'
-- '5.5'
+- 7.0
+- 5.6
+- 5.5
 - hhvm
+before_script:
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
 env:
   matrix:
     secure: rito95+k6WmuYKB4frWhBu3NhaS/2Bw1nfotIy584JfDDDG5ujgQk8toKKKiLUdJ+D2vfpHD2ycWLnYdompTjb8ZITTrqPBbMvgjjZ1OS46hAkrptl69/sI4FKSSu9S+1MTa2+pUMlieFnxBsFEvVaD23VW7FtD3crdqrUhIUWg+3G7QCAfdBJweEwzxGAoeBeH9FfFe/hsabjoLZnLaZgYk3A7nQTv77PFF5uYLEQbnNerYi/ZUmdVrI3YdV6TdjaoAzqQqlFURzwbSX3mvis9pWVFOArnQfc3b0O8dI9W9VrvC4jRC4gbkyJ0rNEXEFK70uSnqMxWpZL7YGLrWZvfvDnXm0FWWGIig4uXEWkzVfkOu2fGygbdOmkVPhq/S/5kj8Byc7mkfqlQzZkNr6HESgYi1vf5HXIpZUBUTHXPa56ly9HhoLAk6Ut6iZvRVMEt1tH4ZOusJ3l73oMPdEXgLLy9NiOuvPMMALimTeD4Ho1pEk2p4ntmLgK5Ui5/EWWd4owpG2MhWC67ChYZsn1hIBoX6Tvgpw3rviqVfNFveBcpoOtaCZ3mNeN7+0Rh/ejkeoBGu90PaM5WHakJxlmWmczqz50g8rsUghFhVYtabrxNiENYQWE0pwDmo7eD6geekJY3zVpQ0ujrXka3iRLRLBtaKwiL6GW0WmqjInww=
