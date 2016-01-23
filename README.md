@@ -1,5 +1,7 @@
 # README
 
+[![Build Status](https://travis-ci.org/MetaSyntactical/google-directions-client.svg?branch=master)](https://travis-ci.org/MetaSyntactical/google-directions-client)
+
 ## What is MetaSyntactical/GoogleDirections?
 
 MetaSyntactical/GoogleDirections is a PHP client library for the
