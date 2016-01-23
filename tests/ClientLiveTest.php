@@ -20,9 +20,9 @@ use PHPUnit_Framework_TestCase;
  * @package MetaSyntactical\GoogleDirections
  *
  * This test demonstrates the usage of the client against the Google Directions
- * API. It will actually call the Google API using the API key specified in the
- * file test.config.ini in this directory if present (see test.config.ini.dist
- * for an example). If no custom configuration is present this test is skipped.
+ * API. It will actually call the Google API using the API key read from the
+ * environment variable API_KEY. If the environment variable is not present this
+ * test is skipped.
  */
 class ClientLiveTest extends PHPUnit_Framework_TestCase
 {
@@ -33,17 +33,13 @@ class ClientLiveTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $configIni = __DIR__ . '/test.config.ini';
-        if (file_exists($configIni))
+        $googleApiKey = getenv('API_KEY');
+
+        if ($googleApiKey)
         {
-            $cofig = parse_ini_file($configIni, true);
             $polylineDecoder = new Polyline();
-            // For usage in production it might be useful to log which
-            // coordinates were skipped, because of errors (e.g. if coordinate
-            // was invalid).
-            //$polylineDecoder->setLogger($loggerObj);
             $this->object = new Client(
-                $cofig['Google']['ApiKey'], $polylineDecoder, new GuzzleTransport(new HttpClient())
+                $googleApiKey, $polylineDecoder, new GuzzleTransport(new HttpClient())
             );
         }
         else
