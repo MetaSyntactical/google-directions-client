@@ -28,7 +28,7 @@ project's composer.json file.
 
 To use the library create an instance of the client class:
 
-´´´
+```
 use MetaSyntactical\GoogleDirections\Client as GoogleApiClient;
 use MetaSyntactical\GoogleDirections\Polyline as Polyline;
 use MetaSyntactical\GoogleDirections\RouteFactory;
@@ -44,7 +44,7 @@ $googleApiClient = new GoogleApiClient(
     $polylineDecoder,
     $guzzleTransport
 );
-´´´
+```
 
 The client class has a few dependencies that must be passed to the constructor:
 
@@ -57,16 +57,14 @@ The client class has a few dependencies that must be passed to the constructor:
 You can optionally set a logger on the Polyline object to collect messages. The
 logger object you pass must implement the [PSR-3 logger interface](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md).
 
-´´´
-polylineDecoder->setLogger($logger);
-´´´
+    polylineDecoder->setLogger($logger);
 
 The client uses a Route object as a value object to handle the geographical
 coordinates. The easiest way to obtain a route object is via the factory, which
 will take an array of comma-separated coordinates (lat,long) for which you want
 to calculate a route:
 
-´´´
+```
 $coordinates = array(
     '50.1109756,8.6824697',
     '50.1131057,8.6935646',
@@ -75,7 +73,7 @@ $coordinates = array(
 );
 $routeFactory = new RouteFactory();
 $route = $routeFactory->createRoute($coordinates);
-´´´
+```
 
 Note that the order of coordinates is relevant, meaning the route will
 start at the first given coordinate and pass through any additional coordinate
@@ -84,16 +82,12 @@ in the given order up to the last given coordinate.
 As with the Polyline object, you can pass a PSR-3 logger to the route
 factory to collect messages:
 
-´´´
-$routeFactory->setLogger($logger);
-´´´
+    $routeFactory->setLogger($logger);
 
 To get an interpolated route call the getDirections() method of the Google API
 client and pass the route object as an argument:
 
-´´´
-$resultRoute = $googleApiClient->getDirections($route);
-´´´
+    $resultRoute = $googleApiClient->getDirections($route);
 
 The return value will be a Route object, depending on the size of the route
 (number of coordinates), one API call (i.e. one call of the getDirections()
@@ -104,30 +98,24 @@ You can check if there are coordinates left in the route for which additional
 calls to the Google API need to be made, you can use the
 getRemainingCoordinateCount() method.
 
-´´´
-$resultRoute->getRemainingCoordinateCount();
-´´´
+    $resultRoute->getRemainingCoordinateCount();
 
 If the count is greater than zero, just call the getDirections() method again
 with the result route as an argument and the Google API is called again yielding
 another portion of the route:
 
-´´´
-$resultRoute = $googleApiClient->getDirections($route);
-´´´
+    $resultRoute = $googleApiClient->getDirections($route);
 
 Once there are no more remaining coordinates, all coordinates that make up the
 interpolated route can be retrieved by calling the getInterpolatedRoute() on
 the result route object.
 
-´´´
-$resultRoute->getInterpolatedRoute();
-´´´
+    $resultRoute->getInterpolatedRoute();
 
 Note that the getInterpolatedRoute() method returns an array of Coordinate
 objects, that have methods to get the values for latitude and longitude:
 
-´´´
+```
 $coordinate->getLatitude();
 $coordinate->getLongitude();
-´´´
+```
