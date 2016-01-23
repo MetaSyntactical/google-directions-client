@@ -1,6 +1,9 @@
 # README
 
 [![Build Status](https://travis-ci.org/MetaSyntactical/google-directions-client.svg?branch=master)](https://travis-ci.org/MetaSyntactical/google-directions-client)
+[![Downloads this Month](https://img.shields.io/packagist/dm/metasyntactical/google-directions-client.svg?style=flat-square)](https://packagist.org/packages/metasyntactical/google-directions-client)
+[![Latest stable](https://img.shields.io/packagist/v/metasyntactical/google-directions-client.svg?style=flat-square&label=stable)](https://packagist.org/packages/metasyntactical/google-directions-client)
+
 
 ## What is MetaSyntactical/GoogleDirections?
 
@@ -12,10 +15,10 @@ coordinates.
 ## Prerequisites for using the Google Directions API
 
 To use this library you will need a Google API key which can be
-obtained from Google. Usage of the Google API is subject is subject
-to Terms and Conditions set out by Google. Depending on the way of
-you want to use Google's API and the amount of traffic/requests Google
-may charge fees. Please refer to
+obtained from Google. Usage of the Google API is subject to Terms and
+Conditions set out by Google. Depending on the way of you want to use
+Google's API and the amount of traffic/requests Google may charge
+fees. Please refer to
 [Google Maps Directions API](https://developers.google.com/maps/documentation/directions)
 for further details.
 
@@ -91,13 +94,13 @@ client and pass the route object as an argument:
 
     $resultRoute = $googleApiClient->getDirections($route);
 
-The return value will be a Route object, depending on the size of the route
+The return value will be a Route object. Depending on the size of the route
 (number of coordinates), one API call (i.e. one call of the getDirections()
 method will only yield a partial result. This is due to the fact that the
 Google API handles only a limited number of waypoints per request.
 
 You can check if there are coordinates left in the route for which additional
-calls to the Google API need to be made, you can use the
+calls to the Google API need to be made. In order to do so use the
 getRemainingCoordinateCount() method.
 
     $resultRoute->getRemainingCoordinateCount();
@@ -109,8 +112,8 @@ another portion of the route:
     $resultRoute = $googleApiClient->getDirections($route);
 
 Once there are no more remaining coordinates, all coordinates that make up the
-interpolated route can be retrieved by calling the getInterpolatedRoute() on
-the result route object.
+interpolated route can be retrieved by calling the getInterpolatedRoute()
+method on the result route object.
 
     $resultRoute->getInterpolatedRoute();
 

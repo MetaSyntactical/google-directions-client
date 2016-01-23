@@ -1,5 +1,6 @@
 {
-  "name": "MetaSyntactical/google-directions-client",
+  "name": "metasyntactical/google-directions-client",
+  "type": "library",
   "description": "Client for Google Directions API to add interpolated points to a route consisting of given coordinates.",
   "minimum-stability": "stable",
   "license": "MIT",

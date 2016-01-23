@@ -4,3 +4,4 @@ phpunit.xml
 phpunit.phar
 phpunit-old.phar
 tests/test.config.ini
+.composer.lock
