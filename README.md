@@ -1,6 +1,6 @@
-#README
+# README
 
-##What is MetaSyntactical/GoogleDirections?
+## What is MetaSyntactical/GoogleDirections?
 
 MetaSyntactical/GoogleDirections is a PHP client library for the
 [Google Maps Directions API](https://developers.google.com/maps/documentation/directions).
