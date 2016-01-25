@@ -30,7 +30,7 @@ for further details.
 The easiest way to install the library is adding it as a dependency to your
 project's composer.json file.
 
-    $ composer require metasyntactical/google-directions "~1.0"
+    $ composer require metasyntactical/google-directions-client "~1.0"
     
 ## Usage
 
