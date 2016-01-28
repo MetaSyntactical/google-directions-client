@@ -6,7 +6,7 @@
 [![Latest dev](https://img.shields.io/packagist/vpre/metasyntactical/google-directions-client.svg?style=flat&label=unstable)](https://packagist.org/packages/metasyntactical/google-directions-client)
 [![License](https://img.shields.io/packagist/l/metasyntactical/google-directions-client.svg?style=flat&label=license)](https://packagist.org/packages/metasyntactical/google-directions-client)
 [![Code Climate](https://codeclimate.com/github/MetaSyntactical/google-directions-client/badges/gpa.svg)](https://codeclimate.com/github/MetaSyntactical/google-directions-client)
-[![Code Climate](https://img.shields.io/codeclimate/coverage/github/MetaSyntactical/google-directions-client/badges/gpa.svg)](https://codeclimate.com/github/MetaSyntactical/google-directions-client)
+[![Test Coverage](https://codeclimate.com/github/MetaSyntactical/google-directions-client/badges/coverage.svg)](https://codeclimate.com/github/MetaSyntactical/google-directions-client/coverage)
 [![SensioLabsInsight](https://img.shields.io/sensiolabs/i/874a0265-8e79-4ded-946b-f6388d3b61c7.svg?style=flat&label=insight)](https://insight.sensiolabs.com/projects/874a0265-8e79-4ded-946b-f6388d3b61c7)
 
 ## What is MetaSyntactical/GoogleDirections?
