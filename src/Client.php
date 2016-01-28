@@ -115,7 +115,7 @@ class Client implements LoggerAwareInterface
     private function createUri(Route $route)
     {
         $cnt = 1;
-        $max = self::MAX_WAYPOINTS_LIMIT + 2;
+        $max = self::MAX_WAYPOINTS_LIMIT + 1;
         $start = null;
         $waypoints = [];
         $end = null;
