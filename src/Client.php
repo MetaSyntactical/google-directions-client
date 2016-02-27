@@ -65,6 +65,17 @@ class Client implements LoggerAwareInterface
     }
 
     /**
+     * Sets a logger instance on the object
+     *
+     * @param LoggerInterface $logger
+     * @return void
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    /**
      * Adds interpolated route step by step on every call.
      *
      * @param Route $route
@@ -72,25 +83,23 @@ class Client implements LoggerAwareInterface
      */
     public function getDirections(Route $route)
     {
+        $uri = $this->createUri($route);
         $request = $this->httpTransport->newRequest()
             ->withMethod('GET')
-            ->withUri($this->createUri($route));
+            ->withUri($uri);
         try
         {
             $response = $this->httpTransport->send($request);
         }
         catch(\GuzzleHttp\Exception\RequestException $e)
         {
-            if (!is_null($this->logger))
-            {
-                $this->logger->error($e->getMessage());
-            }
+            $this->logError($e->getMessage());
             return $route;
         }
 
         if (200 != $response->getStatusCode())
         {
-            $this->logger->error(
+            $this->logError(
                 sprintf(
                     'Received HTTP response code %s with reason "%s".',
                     $response->getStatusCode(),
@@ -101,6 +110,39 @@ class Client implements LoggerAwareInterface
         }
 
         $result = json_decode($response->getBody()->getContents(), true);
+        if ('ZERO_RESULTS' === $result['status'])
+        {
+            $this->logError(
+                sprintf(
+                    'Request "%s" did not yield results.',
+                    $uri
+                )
+            );
+            return $route;
+        }
+
+        if ('OK' !== $result['status'])
+        {
+            $this->logError(
+                sprintf(
+                    'Request "%s" did not return with status "OK" (status: "%s").',
+                    $uri,
+                    $result['status']
+                )
+            );
+            return $route;
+        }
+
+        if (!isset($result['routes'][0]['overview_polyline']['points']))
+        {
+            $this->logError(
+                sprintf(
+                    'Request "%s" did not yield polyline.',
+                    $uri
+                )
+            );
+        }
+
         $overviewPolyline = $result['routes'][0]['overview_polyline']['points'];
         $coordinates = $this->polylineDecoder->decode($overviewPolyline);
         $route->addToInterpolatedRoute($coordinates);
@@ -172,13 +214,16 @@ class Client implements LoggerAwareInterface
     }
 
     /**
-     * Sets a logger instance on the object
+     * Log error message if logger is available.
      *
-     * @param LoggerInterface $logger
-     * @return void
+     * @param string $message
      */
-    public function setLogger(LoggerInterface $logger)
+    private function logError($message)
     {
-        $this->logger = $logger;
+        if (!is_null($this->logger))
+        {
+            $this->logger->error($message);
+        }
     }
+
 }
