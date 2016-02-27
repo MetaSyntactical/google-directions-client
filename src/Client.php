@@ -133,12 +133,7 @@ class Client implements LoggerAwareInterface
             return $route;
         }
 
-        if (
-            !isset($result['routes'])
-            || !isset($result['routes'][0])
-            || !isset($result['routes'][0]['overview_polyline'])
-            || !isset($result['routes'][0]['overview_polyline']['points'])
-        )
+        if (!isset($result['routes'][0]['overview_polyline']['points']))
         {
             $this->logError(
                 sprintf(
@@ -146,6 +141,7 @@ class Client implements LoggerAwareInterface
                     $uri
                 )
             );
+            return $route;
         }
 
         $overviewPolyline = $result['routes'][0]['overview_polyline']['points'];
