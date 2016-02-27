@@ -59,7 +59,7 @@ class Client implements LoggerAwareInterface
         TransportInterface $httpTransport
     )
     {
-        $this->apiKey = $apiKey;
+        $this->apiKey = (string)$apiKey;
         $this->polylineDecoder = $polylineDecoder;
         $this->httpTransport = $httpTransport;
     }
