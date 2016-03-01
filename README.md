@@ -63,10 +63,12 @@ The client class has a few dependencies that must be passed to the constructor:
   [Google Polylines](https://developers.google.com/maps/documentation/utilities/polylinealgorithm)
   (kudos to Peter Chng)
 
-You can optionally set a logger on the Polyline object to collect messages. The
-logger object you pass must implement the [PSR-3 logger interface](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md).
+You can optionally set a logger on both the Google API Client object and the
+Polyline object to collect messages. The logger object you pass must implement 
+the [PSR-3 logger interface](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md).
 
-    polylineDecoder->setLogger($logger);
+    $googleApiClient->setLogger($logger);
+    $polylineDecoder->setLogger($logger);
 
 The client uses a Route object as a value object to handle the geographical
 coordinates. The easiest way to obtain a route object is via the factory, which
