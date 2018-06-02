@@ -33,7 +33,7 @@ class ClientLiveTest extends TestCase
 
     protected function setUp()
     {
-        $googleApiKey = 'AIzaSyCf9im201donITUSO1mSOkZKDZfAP4J3Kw';
+        $googleApiKey = getenv('API_KEY');
 
         if ($googleApiKey)
         {
@@ -45,7 +45,7 @@ class ClientLiveTest extends TestCase
         else
         {
             self::markTestSkipped(
-                'Test configuration missing. See: tests/test.config.ini.dist.'
+                'No Google API key present. Set $googleApiKey = "<Google Directions API Key>" in line 36 or set environment variable.'
             );
         }
     }
