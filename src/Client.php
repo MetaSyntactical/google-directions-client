@@ -13,10 +13,13 @@ namespace MetaSyntactical\GoogleDirections;
 use GuzzleHttp\Psr7\Uri;
 use MetaSyntactical\Http\Transport\TransportInterface;
 use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 
 class Client implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * The Google directions API is limited to handling 23 waypoints per request.
      */
@@ -26,11 +29,6 @@ class Client implements LoggerAwareInterface
      * @var string
      */
     private $apiKey;
-
-    /**
-     * @var LoggerInterface;
-     */
-    private $logger;
 
     /**
      * @var string
@@ -62,17 +60,7 @@ class Client implements LoggerAwareInterface
         $this->apiKey = (string)$apiKey;
         $this->polylineDecoder = $polylineDecoder;
         $this->httpTransport = $httpTransport;
-    }
-
-    /**
-     * Sets a logger instance on the object
-     *
-     * @param LoggerInterface $logger
-     * @return void
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
+        $this->logger = new NullLogger();
     }
 
     /**
@@ -93,13 +81,13 @@ class Client implements LoggerAwareInterface
         }
         catch(\GuzzleHttp\Exception\RequestException $e)
         {
-            $this->logError($e->getMessage());
+            $this->logger->error($e->getMessage());
             return $route;
         }
 
         if (200 != $response->getStatusCode())
         {
-            $this->logError(
+            $this->logger->error(
                 sprintf(
                     'Received HTTP response code %s with reason "%s".',
                     $response->getStatusCode(),
@@ -112,7 +100,7 @@ class Client implements LoggerAwareInterface
         $result = json_decode($response->getBody()->getContents(), true);
         if ('ZERO_RESULTS' === $result['status'])
         {
-            $this->logError(
+            $this->logger->error(
                 sprintf(
                     'Request "%s" did not yield results.',
                     $uri
@@ -123,7 +111,7 @@ class Client implements LoggerAwareInterface
 
         if ('OK' !== $result['status'])
         {
-            $this->logError(
+            $this->logger->error(
                 sprintf(
                     'Request "%s" did not return with status "OK" (status: "%s").',
                     $uri,
@@ -135,7 +123,7 @@ class Client implements LoggerAwareInterface
 
         if (!isset($result['routes'][0]['overview_polyline']['points']))
         {
-            $this->logError(
+            $this->logger->error(
                 sprintf(
                     'Request "%s" did not yield polyline.',
                     $uri
@@ -212,19 +200,6 @@ class Client implements LoggerAwareInterface
         }
 
         return rtrim($getParams, '|');
-    }
-
-    /**
-     * Log error message if logger is available.
-     *
-     * @param string $message
-     */
-    private function logError($message)
-    {
-        if (!is_null($this->logger))
-        {
-            $this->logger->error($message);
-        }
     }
 
 }

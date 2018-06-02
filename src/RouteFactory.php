@@ -13,15 +13,19 @@ namespace MetaSyntactical\GoogleDirections;
 
 use Assert\Assertion;
 use Assert\AssertionFailedException;
+use DomainException;
 use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 
 class RouteFactory implements LoggerAwareInterface
 {
-    /**
-     * @var LoggerInterface;
-     */
-    private $logger;
+    use LoggerAwareTrait;
+
+    public function __construct()
+    {
+        $this->logger = new NullLogger();
+    }
 
     /**
      * Create Route.
@@ -40,12 +44,9 @@ class RouteFactory implements LoggerAwareInterface
             $valueArray = explode(',', $item);
             if (2 != count($valueArray))
             {
-                if(!is_null($this->logger))
-                {
-                    $this->logger->error(
-                        sprintf('"%s" are not valid coordinates.', $item)
-                    );
-                }
+                $this->logger->error(
+                    sprintf('"%s" are not valid coordinates.', $item)
+                );
                 continue;
             }
             try
@@ -54,17 +55,14 @@ class RouteFactory implements LoggerAwareInterface
             }
             catch (AssertionFailedException $e)
             {
-                if (!is_null($this->logger))
-                {
-                    $this->logger->error(
-                        sprintf(
-                            'Given coordinates "%s" are invalid. %s',
-                            $item,
-                            $e->getMessage()
-                        )
-                    );
-                    continue;
-                }
+                $this->logger->error(
+                    sprintf(
+                        'Given coordinates "%s" are invalid. %s',
+                        $item,
+                        $e->getMessage()
+                    )
+                );
+                continue;
             }
             $lat = (float)$valueArray[0];
             $long = (float)$valueArray[1];
@@ -72,18 +70,15 @@ class RouteFactory implements LoggerAwareInterface
             {
                 $coordinate = new Coordinate($lat, $long);
             }
-            catch (\DomainException $e)
+            catch (DomainException $e)
             {
-                if (!is_null($this->logger))
-                {
-                    $this->logger->error(
-                        sprintf(
-                            'Given coordinates "%s" are invalid. %s',
-                            $item,
-                            $e->getMessage()
-                        )
-                    );
-                }
+                $this->logger->error(
+                    sprintf(
+                        'Given coordinates "%s" are invalid. %s',
+                        $item,
+                        $e->getMessage()
+                    )
+                );
                 continue;
             }
 
@@ -94,16 +89,5 @@ class RouteFactory implements LoggerAwareInterface
         $route->setInputRoute($coordinates);
 
         return $route;
-    }
-
-    /**
-     * Sets a logger instance on the object
-     *
-     * @param LoggerInterface $logger
-     * @return void
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
     }
 }

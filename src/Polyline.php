@@ -12,14 +12,17 @@
 namespace MetaSyntactical\GoogleDirections;
 
 use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 
 class Polyline implements PolylineDecoderInterface, LoggerAwareInterface
 {
-    /**
-     * @var LoggerInterface;
-     */
-    private $logger;
+    use LoggerAwareTrait;
+
+    public function __construct()
+    {
+        $this->logger = new NullLogger();
+    }
 
     /**
      * @param string $polyline
@@ -36,34 +39,20 @@ class Polyline implements PolylineDecoderInterface, LoggerAwareInterface
             }
             catch (\DomainException $e)
             {
-                if (!is_null($this->logger))
-                {
-                    $this->logger->error(
-                        sprintf(
-                            'Given polyline (%s) yielded invalid coordinate (%s). %s',
-                            $polyline,
-                            $coordinate[0] . ', ' . $coordinate[1],
-                            $e->getMessage()
-                        )
-                    );
-                }
+                $this->logger->error(
+                    sprintf(
+                        'Given polyline (%s) yielded invalid coordinate (%s). %s',
+                        $polyline,
+                        $coordinate[0] . ', ' . $coordinate[1],
+                        $e->getMessage()
+                    )
+                );
                 continue;
             }
             $coordinates[] = $coordinateObj;
         }
 
         return $coordinates;
-    }
-
-    /**
-     * Sets a logger instance on the object
-     *
-     * @param LoggerInterface $logger
-     * @return void
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
     }
 
     /*
