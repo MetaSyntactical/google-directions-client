@@ -183,7 +183,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
                 'error Server error: `GET https://maps.googleapis.com/maps/api/directions/json?origin=50.1109756,'
                 . '8.6824697&destination=50.1320079,8.6829269&waypoints=via:50.1131057,8.6935646%7Cvia:50.1114651,'
                 . '8.704576%7Cvia:50.1128467,8.7049644%7Cvia:50.1173763,8.7084722%7Cvia:50.1292499,8.6924497&key='
-                . 'abcdefg` resulted in a `500 Internal Server Error` response:'
+                . 'abcdefg` resulted in a `500 Internal Server Error` response'
             )
         );
         self::assertEquals($route, $result);
