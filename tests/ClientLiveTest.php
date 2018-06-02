@@ -13,7 +13,7 @@ namespace MetaSyntactical\GoogleDirections;
 
 use GuzzleHttp\Client as HttpClient;
 use MetaSyntactical\Http\Transport\Guzzle\GuzzleTransport;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ClientLiveTest
@@ -24,7 +24,7 @@ use PHPUnit_Framework_TestCase;
  * environment variable API_KEY. If the environment variable is not present this
  * test is skipped.
  */
-class ClientLiveTest extends PHPUnit_Framework_TestCase
+class ClientLiveTest extends TestCase
 {
     /**
      * @var Client
@@ -33,7 +33,7 @@ class ClientLiveTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $googleApiKey = getenv('API_KEY');
+        $googleApiKey = 'AIzaSyCf9im201donITUSO1mSOkZKDZfAP4J3Kw';
 
         if ($googleApiKey)
         {

@@ -11,9 +11,9 @@
 namespace MetaSyntactical\GoogleDirections;
 
 use Gamez\Psr\Log\TestLogger;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class PolylineTest extends PHPUnit_Framework_TestCase
+class PolylineTest extends TestCase
 {
     /**
      * @var Polyline

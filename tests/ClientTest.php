@@ -18,9 +18,9 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
 use MetaSyntactical\Http\Transport\Guzzle\GuzzleTransport;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ClientTest extends PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
     /**
      * @var array
