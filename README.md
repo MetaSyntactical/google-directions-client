@@ -31,7 +31,12 @@ for further details.
 The easiest way to install the library is adding it as a dependency to your
 project's composer.json file.
 
-    $ composer require metasyntactical/google-directions-client "~1.0"
+    $ composer require metasyntactical/google-directions-client "^2"
+    
+If you use PHP version 5.5.x, 5.6.x or 7.0.x you can revert to an earlier compatible
+version of the library:
+
+    $ composer require metasyntactical/google-directions-client "^1"
     
 ## Usage
 
